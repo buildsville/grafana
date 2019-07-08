@@ -204,6 +204,14 @@ var (
 	S3TempImageStoreSecretKey string
 
 	ImageUploadProvider string
+
+	// slack
+	ShareSlackEnable    bool
+	ShareSlackWebhook   string
+	ShareSlackIconEmoji string
+	ShareSlackIconURL   string
+	ShareSlackUserName  string
+	ShareSlackChannels  string
 )
 
 // TODO move all global vars to this struct
@@ -936,6 +944,7 @@ func (cfg *Cfg) Load(args *CommandLineArgs) error {
 	cfg.readSessionConfig()
 	cfg.readSmtpSettings()
 	cfg.readQuotaSettings()
+	cfg.readSlackShareConfig()
 
 	if VerifyEmailEnabled && !cfg.Smtp.Enabled {
 		log.Warn("require_email_validation is enabled but smtp is disabled")
@@ -1062,4 +1071,14 @@ func (cfg *Cfg) LogConfigSources() {
 	cfg.Logger.Info("Path Plugins", "path", PluginsPath)
 	cfg.Logger.Info("Path Provisioning", "path", cfg.ProvisioningPath)
 	cfg.Logger.Info("App mode " + Env)
+}
+
+func (cfg *Cfg) readSlackShareConfig() {
+	shareSlack := cfg.Raw.Section("share_slack")
+	ShareSlackEnable = shareSlack.Key("enable").MustBool(false)
+	ShareSlackWebhook = shareSlack.Key("webhook").String()
+	ShareSlackIconEmoji = shareSlack.Key("icon_emoji").String()
+	ShareSlackIconURL = shareSlack.Key("icon_url").String()
+	ShareSlackUserName = shareSlack.Key("user_name").String()
+	ShareSlackChannels = shareSlack.Key("channels").String()
 }

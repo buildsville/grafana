@@ -401,6 +401,9 @@ func (hs *HTTPServer) registerRoutes() {
 	// rendering
 	r.Get("/render/*", reqSignedIn, hs.RenderToPng)
 
+	// sharing
+	r.Post("/share/slack", bind(dtos.ShareSlack{}), hs.ShareToSlack)
+
 	// grafana.net proxy
 	r.Any("/api/gnet/*", reqSignedIn, ProxyGnetRequest)
 
