@@ -167,7 +167,7 @@
   					</button>
   					<button class="btn gf-form-btn width-16 btn-secondary" ng-if="externalEnabled" ng-click="createSnapshot(true)" ng-disabled="loading">
   						{{sharingButtonText}}
-  					</button>
+					</button>
   					<a class="btn btn-link" ng-click="dismiss()">Cancel</a>
   				</div>
 
@@ -179,4 +179,32 @@
   	</div>
 
   </div>
+</script>
+
+<script type="text/ng-template" id="shareSlack.html">
+	<div class="ng-cloak" ng-cloak ng-controller="ShareSlackCtrl" ng-init="init()">
+		<div class="share-modal-header">
+			<div class="share-modal-big-icon">
+				<i ng-if="loading" class="fa fa-spinner fa-spin"></i>
+				<i ng-if="!loading" class="gicon gicon-slack"></i>
+			</div>
+			<div class="share-modal-content">
+				<p class="share-modal-info-text">
+					Share panel image to slack.
+				</p>
+				<div class="gf-form">
+					<span class="gf-form-label width-6">Channel</span>
+					<div class="gf-form-select-wrapper width-20">
+						<select class="gf-form-input" ng-model="channel" ng-options="f.value as f.text for f in channelOptions"></select>
+					</div>
+				</div>
+				<div class="gf-form-button-row">
+					<button class="btn gf-form-btn width-10 btn-secondary" ng-click="sharePanel()" ng-disabled="loading">
+						Share to Slack
+					</button>  
+					<a class="btn btn-link" ng-click="dismiss()">Cancel</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </script>

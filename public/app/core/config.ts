@@ -10,6 +10,11 @@ export interface BuildInfo {
   hasUpdate: boolean;
 }
 
+export interface SlackShare {
+  enable: boolean;
+  channels: string;
+}
+
 export class Settings {
   datasources: { [str: string]: DataSourceInstanceSettings };
   panels: { [key: string]: PanelPluginMeta };
@@ -40,6 +45,7 @@ export class Settings {
   disableSanitizeHtml: boolean;
   theme: GrafanaTheme;
   pluginsToPreload: string[];
+  slackShare: SlackShare = {} as SlackShare;
 
   constructor(options: Settings) {
     this.theme = options.bootData.user.lightTheme ? getTheme(GrafanaThemeType.Light) : getTheme(GrafanaThemeType.Dark);

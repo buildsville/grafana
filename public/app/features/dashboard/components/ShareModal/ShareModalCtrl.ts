@@ -33,6 +33,10 @@ export function ShareModalCtrl($scope, $rootScope, $location, $timeout, timeSrv,
       $scope.tabs.push({ title: 'Export', src: 'shareExport.html' });
     }
 
+    if (config.slackShare.enable) {
+      $scope.tabs.push({ title: 'Slack', src: 'shareSlack.html' });
+    }
+
     $scope.buildUrl();
   };
 

@@ -196,6 +196,10 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *m.ReqContext) (map[string]interf
 			"env":           setting.Env,
 			"isEnterprise":  setting.IsEnterprise,
 		},
+		"slackShare": map[string]interface{}{
+			"enable":   setting.ShareSlackEnable,
+			"channels": setting.ShareSlackChannels,
+		},
 	}
 
 	return jsonObj, nil
