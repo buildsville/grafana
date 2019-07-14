@@ -37,6 +37,10 @@ func (hs *HTTPServer) ShareToSlack(c *m.ReqContext, dto dtos.ShareSlack) {
 
 	path := fmt.Sprintf("d-solo/%s/%s?orgId=%d&panelId=%d&from=%d&to=%d", dto.Uid, dto.Slug, c.OrgId, dto.PanelId, dto.From, dto.To)
 
+	if dto.Theme != "current" {
+		path = path + "&theme=" + dto.Theme
+	}
+
 	result, err := hs.RenderService.Render(ctx, rendering.Opts{
 		Width:           width,
 		Height:          height,
@@ -91,7 +95,7 @@ func (hs *HTTPServer) ShareToSlack(c *m.ReqContext, dto dtos.ShareSlack) {
 		"parse": "full", // to linkify urls, users and channels in alert message.
 	}
 
-	if dto.Channel != "" {
+	if dto.Channel != "__default__" {
 		body["channel"] = dto.Channel
 	}
 	if setting.ShareSlackUserName != "" {

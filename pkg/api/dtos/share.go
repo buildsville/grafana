@@ -9,4 +9,5 @@ type ShareSlack struct {
 	Channel   string `json:channel`
 	From      int    `json:from`
 	To        int    `json:to`
+	Theme     string `json:theme`
 }

@@ -5,15 +5,17 @@ import { appEvents } from 'app/core/core';
 export class ShareSlackCtrl {
   /** @ngInject */
   constructor($scope, $location, backendSrv, timeSrv) {
+    $scope.theme = "current";
+
     const options = config.slackShare.channels.split(',');
 
     $scope.channelOptions = [];
-    $scope.channelOptions.push({ text: 'Default channel', value: '' });
+    $scope.channelOptions.push({ text: 'Default channel', value: '__default__' });
     for (let index = 0; index < options.length; index++) {
       const o = options[index];
       $scope.channelOptions.push({ text: o, value: o });
     }
-    $scope.channel = '';
+    $scope.channel = '__default__';
 
     $scope.init = () => {
       $scope.panel = $scope.panel;
@@ -22,6 +24,7 @@ export class ShareSlackCtrl {
     $scope.sharePanel = () => {
       const range = timeSrv.timeRange();
       const channel = $scope.channel;
+      const theme = $scope.theme;
 
       const path = $location.path();
       const pathArr = path.split('/');
@@ -36,6 +39,7 @@ export class ShareSlackCtrl {
         channel: channel,
         from: range.from.valueOf(),
         to: range.to.valueOf(),
+        theme: theme,
       };
 
       $scope.loading = true;

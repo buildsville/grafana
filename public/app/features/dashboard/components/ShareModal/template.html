@@ -198,6 +198,12 @@
 						<select class="gf-form-input" ng-model="channel" ng-options="f.value as f.text for f in channelOptions"></select>
 					</div>
 				</div>
+				<div class="gf-form">
+					<span class="gf-form-label width-6">Theme</span>
+					<div class="gf-form-select-wrapper width-10">
+						<select class="gf-form-input" ng-model="theme" ng-options="f as f for f in ['current', 'dark', 'light']"></select>
+					</div>
+				</div>
 				<div class="gf-form-button-row">
 					<button class="btn gf-form-btn width-10 btn-secondary" ng-click="sharePanel()" ng-disabled="loading">
 						Share to Slack
