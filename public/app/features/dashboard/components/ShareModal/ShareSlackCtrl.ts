@@ -4,8 +4,10 @@ import { appEvents } from 'app/core/core';
 
 export class ShareSlackCtrl {
   /** @ngInject */
-  constructor($scope, $location, backendSrv, timeSrv) {
+  constructor($scope, $location, backendSrv, timeSrv, templateSrv, linkSrv) {
     $scope.theme = "current";
+    $scope.timeRange = true;
+    $scope.tempVar = true;
 
     const options = config.slackShare.channels.split(',');
 
@@ -30,16 +32,33 @@ export class ShareSlackCtrl {
       const pathArr = path.split('/');
       const uid = pathArr[pathArr.length - 2];
       const slug = pathArr[pathArr.length - 1];
+
+      const params = angular.copy($location.search());
+      params.from = range.from.valueOf();
+      params.to = range.to.valueOf();
+      params.orgId = config.bootData.user.orgId;
+      params.panelId = $scope.panel.id;
+      params.fullscreen = true;
+      if ($scope.tempVar) {
+        templateSrv.fillVariableValuesForUrl(params);
+      }
+      if (!$scope.timeRange) {
+        delete params.from;
+        delete params.to;
+      }
+      if ($scope.theme !== "current") {
+        params.theme = theme;
+      }
+
+      const paramStr = linkSrv.addParamsToUrl("", params);
+
       const payload = {
         rawURL: $location.absUrl(),
         uid: uid,
         slug: slug,
-        panelId: $scope.panel.id,
         panelName: $scope.panel.title,
         channel: channel,
-        from: range.from.valueOf(),
-        to: range.to.valueOf(),
-        theme: theme,
+        param: paramStr,
       };
 
       $scope.loading = true;

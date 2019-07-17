@@ -35,11 +35,7 @@ func (hs *HTTPServer) ShareToSlack(c *m.ReqContext, dto dtos.ShareSlack) {
 	height := 500
 	timeout := 60
 
-	path := fmt.Sprintf("d-solo/%s/%s?orgId=%d&panelId=%d&from=%d&to=%d", dto.Uid, dto.Slug, c.OrgId, dto.PanelId, dto.From, dto.To)
-
-	if dto.Theme != "current" {
-		path = path + "&theme=" + dto.Theme
-	}
+	path := fmt.Sprintf("d-solo/%s/%s%s", dto.Uid, dto.Slug, dto.Param)
 
 	result, err := hs.RenderService.Render(ctx, rendering.Opts{
 		Width:           width,
